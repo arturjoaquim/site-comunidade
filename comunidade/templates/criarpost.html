@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Comunidade - Criar Post</title>
+{% endblock %}
+
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <form method="POST" action="" class="border mt-5 p-4">
+                {{ form.csrf_token }}
+                <legend>Criar Post</legend>
+                <fieldset>
+                    <div class="form-group">
+                        {{ form.titulo.label(class="form-control-label") }}
+                        {% if form.titulo.errors %}
+                            {{ form.titulo(class="form-control is-invalid") }}
+                            {% for error in form.titulo.errors %}
+                                <div class="invalid-feedback">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            {{ form.titulo(class="form-control") }}
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        {{ form.corpo.label(class="form-control-label") }}
+                        {% if  form.corpo.errors %}
+                            {{ form.corpo(class="form-control is-invalid") }}
+                            {% for error in form.corpo.errors %}
+                                <div class="invalid-feedback">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            {{ form.corpo(class="form-control") }}
+                        {% endif %}
+                    </div>
+                </fieldset>
+                {{ form.botao_submit(class="btn btn-primary mt-2") }}
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
