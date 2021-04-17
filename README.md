@@ -31,4 +31,4 @@ git clone https://github.com/arturjoaquim/site-comunidade
 
 [Artur Joaquim](https://github.com/arturjoaquim)
 
-** Obrigado pela visita **
+**Obrigado pela visita**
