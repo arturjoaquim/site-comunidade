@@ -15,9 +15,11 @@
             <div class="row border mt-4 p-3 meupost">
                 <div class="col col-2">
 
-                    <div class="image me-2" style="text-align: center"> <img src='{{ url_for("static", filename="fotos_perfil/{}".format(post.autor.foto_perfil)) }}' class="rounded" width="130" height="130"> </div>
+                    <div class="image me-2" style="text-align: center"> 
+                        <img src='{{ url_for("static", filename="fotos_perfil/{}".format(post.autor.foto_perfil)) }}' class="rounded" width="130" height="130"> 
+                    </div>
                     <p style="text-align: center"><strong>{{ post.autor.username }}</strong></p>
-                    {% if not current_user.cursos %}
+                    {% if not post.autor.cursos %}
                         <button type="button" class="btn btn-success" disabled>Nada informado</button>
                     {% else %}
                         {% for curso in post.autor.cursos.split(';') %}
