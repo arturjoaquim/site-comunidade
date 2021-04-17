@@ -24,8 +24,12 @@ git clone https://github.com/arturjoaquim/site-comunidade
 
 # Use um ambiente virtual da sua preferência
 
-# Use o pip para instalar os requisitos do arquivo 'requeriments.txt'
-pip install <nome_requisito>
+# Você tem quer ter todas os modulos de 'requeriments.txt'
+    # Para instalar novos modulos em seu ambiente virtual use:
+    pip install <nome_modulo>
+
+    # Para verificar quais modulos você tem em seu ambiente use:
+    pip freeze
 
 # Abra uma IDE ou um terminal
 
