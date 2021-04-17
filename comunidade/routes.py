@@ -124,5 +124,3 @@ def excluir_post(post_id):
         return redirect(url_for('home'))
     else:
         abort(403)
-
-
