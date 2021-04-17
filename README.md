@@ -22,6 +22,11 @@
 # Primeiro clone o repósitorio
 git clone https://github.com/arturjoaquim/site-comunidade
 
+# Use um ambiente virtual da sua preferência
+
+# Use o pip para instalar os requisitos do arquivo 'requeriments.txt'
+pip install <nome_requisito>
+
 # Abra uma IDE ou um terminal
 
 # Execute o arquivo main.py
