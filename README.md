@@ -1,5 +1,8 @@
 # Sobre
     Um forum web, crie seus posts, cadastre-se e gerencie seu perfil!
+    
+## Acessar a comunidade
+Para acessar a comunidade rodando no servidor heroku [clique aqui](https://comunidade-techs.herokuapp.com).
 
 ## Tecnologias usadas
 
