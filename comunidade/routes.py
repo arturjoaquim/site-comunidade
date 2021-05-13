@@ -10,15 +10,18 @@ def home():
     posts = Post.query.order_by(Post.id.desc())
     return render_template('home.html', posts=posts)
 
+
 @app.route('/contato')
 def contato():
     return render_template('contato.html')
+
 
 @app.route('/usuarios')
 @login_required
 def usuarios():
     usuarios = Usuario.query.all()
     return render_template('usuarios.html', usuarios=usuarios)
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -48,12 +51,14 @@ def login():
         return redirect(url_for('home'))
     return render_template('login.html', form_login=form_login, form_criarconta=form_criarconta)
 
+
 @app.route('/sair')
 @login_required
 def sair():
     logout_user()
     flash('Logout feito com sucesso', 'alert-success')
     return redirect(url_for('home'))
+
 
 @app.route('/post/criar', methods=['GET', "POST"])
 @login_required
@@ -67,11 +72,13 @@ def criar_post():
         return redirect(url_for('home'))
     return render_template('criarpost.html', form=form)
 
+
 @app.route('/perfil')
 @login_required
 def meu_perfil():
     foto_perfil = url_for('static', filename=f'fotos_perfil/{current_user.foto_perfil}')
     return render_template('meuperfil.html', foto_perfil=foto_perfil)
+
 
 @app.route('/perfil/editar', methods=['GET', 'POST'])
 @login_required
@@ -84,7 +91,7 @@ def editar_perfil():
             current_user.salvar_foto(form.foto_perfil.data)
         current_user.atualizar_cursos(form)
         database.session.commit()
-        flash(f'Perfil atualizado com sucesso', 'alert-success')
+        flash('Perfil atualizado com sucesso', 'alert-success')
         return redirect(url_for('meu_perfil'))
     elif request.method == 'GET':
         form.email.data = current_user.email
@@ -95,6 +102,7 @@ def editar_perfil():
                 check.data = True
     foto_perfil = url_for('static', filename=f'fotos_perfil/{current_user.foto_perfil}')
     return render_template('editarperfil.html', foto_perfil=foto_perfil, form=form)
+
 
 @app.route('/post/<post_id>', methods=['GET', 'POST'])
 def post(post_id):
@@ -113,6 +121,7 @@ def post(post_id):
     else:
         form = None
     return render_template('post.html', post=post, form=form)
+
 
 @app.route('/post/<post_id>/excluir', methods=['GET', 'POST'])
 def excluir_post(post_id):

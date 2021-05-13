@@ -11,6 +11,7 @@ import os
 def carregar_usuario(user_id):
     return Usuario.query.get(int(user_id))
 
+
 class Usuario(database.Model, UserMixin):
     id = database.Column(database.Integer, primary_key=True)
     username = database.Column(database.String, nullable=False)
@@ -19,7 +20,7 @@ class Usuario(database.Model, UserMixin):
     foto_perfil = database.Column(database.String, default='default.jpg')
     posts = database.relationship('Post', backref='autor', lazy=True)
     cursos = database.Column(database.String, default='Não informado', nullable=False)
-    
+
     def contar_posts(self):
         return len(self.posts)
 
@@ -31,14 +32,14 @@ class Usuario(database.Model, UserMixin):
             caminho_completo = os.path.join(pasta_raiz, 'static/fotos_perfil', nome_imagem)
             os.remove(caminho_completo)
             self.foto_perfil = 'default.jpg'
-    
+
     def salvar_foto(self, imagem):
         # Colocando codigo no nome da imagem
         codigo = secrets.token_hex(8)
         nome, extensao = os.path.splitext(imagem.filename)
         nome_arquivo = (nome + codigo + extensao)
         caminho_completo = os.path.join(pasta_raiz, 'static/fotos_perfil', nome_arquivo)
-        
+
         # Redimensionando a imagem
         basewidth = 480
         imagem_reduzida = Image.open(imagem)
@@ -49,7 +50,7 @@ class Usuario(database.Model, UserMixin):
         # imagem_reduzida = Image.open(imagem)
         # imagem_reduzida.thumbnail(size)
         imagem_reduzida.save(caminho_completo)
-        #Editando no banco de dados
+        # Editando no banco de dados
         self._apagar_foto()
         self.foto_perfil = nome_arquivo
 
@@ -67,4 +68,3 @@ class Post(database.Model):
 
     def save_new_data(self):
         self.data_publicacao = datetime.now(pytz.timezone('Brazil/East'))
-
