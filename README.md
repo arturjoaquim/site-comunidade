@@ -1,46 +1,45 @@
-# Sobre
-    Um forum web, crie seus posts, cadastre-se e gerencie seu perfil!
+# site-comunidade
+Um site feito com Flask + Bootstrap e representa uma comunidade, para posts de dúvidas ou discussões de tópicos.
     
-## Acessar a comunidade
-Para acessar a comunidade rodando no servidor heroku [clique aqui](https://comunidade-techs.herokuapp.com).
+## :rocket: Tecnologias usadas
 
-## Tecnologias usadas
+* Python 3.8.6;
+* Flask;
+* Bootstrap;
+* HTML;
+* CSS.
 
-* Python
-* Flask
-* Bootstrap
-* HTML
-* CSS
+## :gear: Funções
 
-## Funcionalidades do projeto
+* Login/Logout;
+* Editar perfil;
+* Criar e editar posts;
+* Vizualizar posts;
+* Vizualizar usuários.
 
-* Cadastro e Login de usuário
-* Editar perfil
-* Criar, gerenciar e vizualizar posts
-* Vizualizar outros usuários
-
-## Rodando a aplicação
+## :checkered_flag: Rodando a aplicação
+É necessário ter **python** instalado em sua máquina, para rodar o projeto, é recomendado a versão 3.8
 
 ```
-# Primeiro clone o repósitorio
+# Clone o repositório 
 git clone https://github.com/arturjoaquim/site-comunidade
 
-# Use um ambiente virtual da sua preferência
+# Abra o projeto em sua IDE
 
-# Você tem quer ter todas os modulos de 'requeriments.txt'
-    # Para instalar novos modulos em seu ambiente virtual use:
-    pip install <nome_modulo>
+#Crie um ambiente virtual [Opcional e Recomendado]
+python -m venv venv
+.venv\Scripts\activate.ps1 # Ativando seu ambiente no power shell
 
-    # Para verificar quais modulos você tem em seu ambiente use:
-    pip freeze
+# Instale as dependências
+pip install -r requirements.txt
 
-# Abra uma IDE ou um terminal
-
-# Execute o arquivo main.py
+# Execute o main.py
 ```
+## 🌐 Acesse a comunidade
+Este projeto também está hospedado online e por isso você pode acessa-lo rodando no servidor heroku [clique aqui](https://comunidade-techs.herokuapp.com).
 
-## Autores
+## :pencil2: Contribuições
+Sinta-se a vontade para contribuir com o projeto, fazendo *Forks* ou *Pull Requests*, ficarei feliz em analisa-los. Caso tenha quaisquer dúvidas ou sugestões sobre o projeto por favor mande no meu e-mail: artur.joaquimbr@gmail.com.
 
-[Artur Joaquim](https://github.com/arturjoaquim)
-
-**Obrigado pela visita**
+## :page_facing_up: Licença
+Este repositório esta licenciado pela Licença MIT, para mais informações acesse o arquivo [LICENSE.md](https://github.com/arturjoaquim/site-comunidade/blob/master/LICENSE).
