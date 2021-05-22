@@ -2,39 +2,31 @@
 
 {% block head %}
 <title>Comunidade - Home</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
 {% endblock %}
 
 
 {% block body%}
-<div class="container">
-    <h1 class="mt-3" style="color: orange">Comunidade</h1>
-        <strong>Seja bem vindo, crie uma conta para publicar algo.</strong>
-        <p>Abaixo estão posts de nossa comunidade.</p>
-        <hr>
+<main>
+    <h1 class="titulo text">Comunidade</h1>
+    <p class="text">Seja bem vindo à nossa comunidade, <a href="{{ url_for('login') }}" target="_self" rel="next">crie uma conta</a> para postar algo.</p>
+    <section>
+        <h2 class="titulo text">Posts</h2>
         {% for post in posts %}
-            <div class="row border mt-4 p-3 meupost">
-                <div class="col col-2">
-
-                    <div class="image me-2" style="text-align: center"> 
-                        <img src='{{ url_for("static", filename="fotos_perfil/{}".format(post.autor.foto_perfil)) }}' class="rounded" width="130" height="130"> 
+            <article class="post">
+                    <p class="post-titulo">
+                        <a class="post-link" href="{{ url_for('post', post_id=post.id) }}" target="_self" rel="next">{{ post.titulo }}</a> <br> 
+                        <small>Data: {{ post.data_publicacao.strftime('%m/%Y') }}</small>
+                    </p>
+                    <div>
+                        <p class="post-username">
+                            <img class="post-image" src="{{ url_for('static', filename='fotos_perfil/{}'.format(post.autor.foto_perfil)) }}" alt="Foto de Perfil"> <br>
+                            {{ post.autor.username }}
+                        </p>
                     </div>
-                    <p style="text-align: center"><strong>{{ post.autor.username }}</strong></p>
-                    {% if not post.autor.cursos %}
-                        <button type="button" class="btn btn-success" disabled>Nada informado</button>
-                    {% else %}
-                        {% for curso in post.autor.cursos.split(';') %}
-                            <button type="button" class="btn btn-success mt-2" disabled>{{ curso }}</button>
-                        {% endfor %}
-                    {% endif %}
-
                 </div>
-                <div class="col col-10">
-                    <a style="text-decoration: none" href="{{ url_for('post', post_id=post.id) }}"><h3>{{ post.titulo }}</h3></a>
-                    <p>{{ post.corpo }}</p>
-                </div>
-            </div>
+            </article>
         {% endfor %}
-        <div class="mt-5">
-        </div>
- </div>
+    </section>
+</main>
 {% endblock %}

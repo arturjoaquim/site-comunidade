@@ -1,0 +1,65 @@
+@charset "UTF8";
+
+* {
+    box-sizing: border-box;
+}
+
+main {
+    width: 85%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+a {
+    text-decoration: none;
+    color: #0A58CA;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.text {
+    text-align: center;
+}
+
+.titulo {
+    margin: 10px 0;
+}
+
+.post {
+    width: 100%;
+    max-width: 800px;
+    border: 2px solid rgb(145, 145, 145);
+    margin: 5px auto 10px auto;
+    background-color: rgb(235, 235, 235);
+    display: block;
+}
+
+.post::after {
+    content: '';
+    clear: both;
+}
+
+.post-image {
+    width: 40px;
+    height: 40px;
+    border-radius: 30px;
+}
+
+.post-username {
+    font-weight: bold;
+    text-align: end;
+    padding: 5px 5px 0 0;
+
+}
+
+.post-titulo {
+    float: left;
+    padding: 0px 0px 5px 5px;
+
+}
+
+.post-link {
+    font-size: 1.2em;
+}
