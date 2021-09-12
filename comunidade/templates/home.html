@@ -2,15 +2,16 @@
 
 {% block head %}
 <title>Comunidade - Home</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
 {% endblock %}
 
 
 {% block body%}
 <main>
-    <h1 class="titulo text">Comunidade</h1>
-    <p class="text">Seja bem vindo à nossa comunidade, <a href="{{ url_for('login') }}" target="_self" rel="next">crie uma conta</a> para postar algo.</p>
-    <section>
+    <section class="section">
+        <h1 class="titulo text">Comunidade</h1>
+        <p class="text">Seja bem vindo à nossa comunidade, <a href="{{ url_for('login') }}" target="_self" rel="next">crie uma conta</a> para postar algo.</p>
+    </section>
+    <section class="section">
         <h2 class="titulo text">Posts</h2>
         {% for post in posts %}
             <article class="post">
