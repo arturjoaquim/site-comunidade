@@ -1,5 +1,6 @@
 from comunidade import database, login_manager, pasta_raiz
 from flask_login import UserMixin
+
 from PIL import Image
 from datetime import datetime
 import pytz
@@ -68,3 +69,7 @@ class Post(database.Model):
 
     def save_new_data(self):
         self.data_publicacao = datetime.now(pytz.timezone('Brazil/East'))
+
+if __name__ == "__main__":
+    os.system('python3 manage.py db init')
+    database.create_all()
