@@ -1,26 +1,27 @@
-from comunidade import database, login_manager, pasta_raiz
+from comunidade import app, login_manager, pasta_raiz
+from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
-
 from PIL import Image
 from datetime import datetime
 import pytz
 import secrets
 import os
 
+db = SQLAlchemy(app)
 
 @login_manager.user_loader
 def carregar_usuario(user_id):
     return Usuario.query.get(int(user_id))
 
 
-class Usuario(database.Model, UserMixin):
-    id = database.Column(database.Integer, primary_key=True)
-    username = database.Column(database.String, nullable=False)
-    email = database.Column(database.String, nullable=False, unique=True)
-    senha = database.Column(database.String, nullable=False)
-    foto_perfil = database.Column(database.String, default='default.jpg')
-    posts = database.relationship('Post', backref='autor', lazy=True)
-    cursos = database.Column(database.String, default='Não informado', nullable=False)
+class Usuario(db.Model, UserMixin):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String, nullable=False, unique=True)
+    email = db.Column(db.String, nullable=False, unique=True)
+    senha = db.Column(db.String, nullable=False)
+    foto_perfil = db.Column(db.String, default='default.jpg')
+    posts = db.relationship('Post', backref='autor', lazy=True)
+    cursos = db.Column(db.String, default='Não informado', nullable=False)
 
     def contar_posts(self):
         return len(self.posts)
@@ -60,16 +61,12 @@ class Usuario(database.Model, UserMixin):
         self.cursos = ';'.join(lista_cursos)
 
 
-class Post(database.Model):
-    id = database.Column(database.Integer, primary_key=True, nullable=False)
-    titulo = database.Column(database.String, nullable=False)
-    corpo = database.Column(database.Text, nullable=False)
-    data_publicacao = database.Column(database.DateTime, nullable=False, default=datetime.utcnow)
-    autor_id = database.Column(database.Integer, database.ForeignKey('usuario.id'), nullable=False)
+class Post(db.Model):
+    id = db.Column(db.Integer, primary_key=True, nullable=False)
+    titulo = db.Column(db.String, nullable=False)
+    corpo = db.Column(db.Text, nullable=False)
+    data_publicacao = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    autor_id = db.Column(db.Integer, db.ForeignKey('usuario.id'), nullable=False)
 
     def save_new_data(self):
         self.data_publicacao = datetime.now(pytz.timezone('Brazil/East'))
-
-if __name__ == "__main__":
-    os.system('python3 manage.py db init')
-    database.create_all()

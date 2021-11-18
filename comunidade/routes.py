@@ -1,13 +1,15 @@
 from flask import render_template, request, flash, redirect, url_for, abort
-from comunidade import app, database, bcrypt
+from comunidade import app, bcrypt
 from comunidade.forms import FormLogin, FormCriarConta, FormEditarPerfil, FormCriarPost
-from comunidade.models import Usuario, Post
+from comunidade.models import Usuario, Post, db
 from flask_login import login_user, logout_user, current_user, login_required
 
+db.create_all()
+db.session.commit()
 
 @app.route('/')
 def home():
-    posts = Post.query.order_by(Post.id.desc())
+    posts = Post.query.order_by(Post.id)
     return render_template('home.html', posts=posts)
 
 
@@ -29,24 +31,23 @@ def login():
     form_login = FormLogin()
     if form_login.validate_on_submit() and 'botao_submit_login' in request.form:
         usuario = Usuario.query.filter_by(email=form_login.email.data).first()
-        if usuario:
-            if bcrypt.check_password_hash(usuario.senha, form_login.senha.data):
-                login_user(usuario, remember=form_login.lembrar_login.data)
-                flash(f'Login feito com sucesso no email: {form_login.email.data}', 'alert-success')
-                parametro_url = request.args.get('next')
-                if parametro_url:
-                    return redirect(parametro_url)
-                else:
-                    return redirect(url_for('home'))
+        if usuario and bcrypt.check_password_hash(usuario.senha, form_login.senha.data):
+            login_user(usuario, remember=form_login.lembrar_login.data)
+            flash(f'Login feito com sucesso no email: {form_login.email.data}', 'alert-success')
+            parametro_url = request.args.get('next')
+            if parametro_url:
+                return redirect(parametro_url)
             else:
-                flash('Falha no login, senha incorreta.', 'alert-danger')
+                return redirect(url_for('home'))
         else:
-            flash('Falha no login, email incorreto.', 'alert-danger')
+            flash('Falha no login, senha incorreta.', 'alert-info')
+    # else:
+    #     flash('Falha no login, email incorreto.', 'alert-danger')
     if form_criarconta.validate_on_submit() and 'botao_submit_criarconta' in request.form:
-        senha_crypt = bcrypt.generate_password_hash(form_criarconta.senha.data)
+        senha_crypt = bcrypt.generate_password_hash(form_criarconta.senha.data).decode('utf8') # Decode para decodificar para ser inserida no banco de dados corretamente
         usuario = Usuario(username=form_criarconta.username.data, email=form_criarconta.email.data, senha=senha_crypt)
-        database.session.add(usuario)
-        database.session.commit()
+        db.session.add(usuario)
+        db.session.commit()
         flash(f'Conta criada com sucesso para o email: {form_criarconta.email.data}', 'alert-success')
         return redirect(url_for('home'))
     return render_template('login.html', form_login=form_login, form_criarconta=form_criarconta)
@@ -67,8 +68,8 @@ def criar_post():
     if form.validate_on_submit():
         post = Post(titulo=form.titulo.data, corpo=form.corpo.data, autor=current_user)
         post.save_new_data()
-        database.session.add(post)
-        database.session.commit()
+        db.session.add(post)
+        db.session.commit()
         return redirect(url_for('home'))
     return render_template('criarpost.html', form=form)
 
@@ -90,7 +91,7 @@ def editar_perfil():
         if form.foto_perfil.data:
             current_user.salvar_foto(form.foto_perfil.data)
         current_user.atualizar_cursos(form)
-        database.session.commit()
+        db.session.commit()
         flash('Perfil atualizado com sucesso', 'alert-success')
         return redirect(url_for('meu_perfil'))
     elif request.method == 'GET':
@@ -115,7 +116,7 @@ def post(post_id):
         elif form.validate_on_submit():
             post.titulo = form.titulo.data
             post.corpo = form.corpo.data
-            database.session.commit()
+            db.session.commit()
             flash('Post Atualizado com sucesso', 'alert-success')
             return redirect(url_for('home'))
     else:
@@ -127,8 +128,8 @@ def post(post_id):
 def excluir_post(post_id):
     post = Post.query.get(post_id)
     if current_user == post.autor:
-        database.session.delete(post)
-        database.session.commit()
+        db.session.delete(post)
+        db.session.commit()
         flash('Post excluído com sucesso!', 'alert-danger')
         return redirect(url_for('home'))
     else:
